@@ -1,15 +1,8 @@
 # VIBRANT 2K26 — Website
 
-Production-ready Next.js 14 (App Router) + TypeScript + Tailwind CSS +
-Framer Motion site for VIBRANT 2K26, presented by Vibeesta Creative
-Society × Shrinik Club.
+A modern, production-ready event website built with Next.js 14 (App Router), TypeScript, Tailwind CSS, and Framer Motion for VIBRANT 2K26, presented by Vibeesta Creative Society × Shrinik Club.
 
-This project was written by hand in an offline sandbox with no
-network access, so `npm install` has **not** been run and the build
-has **not** been verified with `next build`. Every file has been
-checked with the TypeScript compiler for syntax correctness, and all
-imports have been cross-checked against the files that exist — but
-please run a real build locally before deploying.
+The website features a cinematic visual experience, responsive design, animated interactions, event information, schedule, gallery, sponsors, FAQs, and registration-focused sections.
 
 ## Getting started
 
