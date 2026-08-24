@@ -1,0 +1,212 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: "Unbounded", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+html,
+body {
+  background-color: #07070b;
+  color: #f5f3f7;
+}
+
+body {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+body.locked {
+  overflow: hidden;
+  height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+::selection {
+  background: #9f1239;
+  color: #f5f3f7;
+}
+
+:focus-visible {
+  outline: 2px solid #a855f7;
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -60px;
+  background: #14121c;
+  color: #f5f3f7;
+  padding: 12px 18px;
+  z-index: 1000;
+  transition: top 0.3s;
+  border-radius: 4px;
+}
+.skip-link:focus {
+  top: 16px;
+}
+
+/* Restrained, single-purpose fusion gradient. Used sparingly —
+   only on the primary CTA and the VIBRANT wordmark — never on
+   every heading. Multi-stop so it reads as genuine energy
+   (violet → magenta → crimson), not a flat two-color blend. */
+.fusion-gradient {
+  background-image: linear-gradient(
+    100deg,
+    #6d28d9 0%,
+    #a855f7 32%,
+    #db2777 66%,
+    #e11d48 100%
+  );
+}
+
+.fusion-text {
+  background-image: linear-gradient(
+    100deg,
+    #a855f7 0%,
+    #db2777 55%,
+    #e11d48 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Gold system — reserved for the prize pool moment only. */
+.gold-text {
+  background-image: linear-gradient(100deg, #e8c988 0%, #c9a24b 55%, #9c7a34 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Atmosphere — layered radial energy used behind the hero, prize
+   pool and final CTA. Not a flat wash: two offset color blobs plus
+   a soft light-leak diagonal, all well under full opacity. */
+.atmosphere-violet {
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.5), transparent 70%);
+  filter: blur(60px);
+}
+.atmosphere-crimson {
+  background: radial-gradient(circle, rgba(219, 39, 119, 0.42), transparent 70%);
+  filter: blur(60px);
+}
+.light-leak {
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(219, 39, 119, 0.1) 48%,
+    rgba(168, 85, 247, 0.14) 55%,
+    transparent 72%
+  );
+}
+.smoke-fog {
+  background: radial-gradient(ellipse 60% 40% at 50% 100%, rgba(20, 18, 28, 0.9), transparent 75%);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.container-content {
+  width: 100%;
+  max-width: 1360px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+@media (min-width: 768px) {
+  .container-content {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+
+/* ---------------------------------------------------------------
+   FILM GRAIN — a fixed, extremely faint noise layer applied once
+   at the root. Purpose: stop the interface from reading as
+   digitally-perfect / AI-generated. It should never be consciously
+   noticeable; if you can clearly see it, the opacity is too high.
+--------------------------------------------------------------- */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+}
+
+/* ---------------------------------------------------------------
+   FINE-LINE MOTIF — the recurring thin-line / orbit visual
+   signature used sparingly across Hero, About, Prize Pool,
+   Organizers and the final CTA. Never glowing, never thick.
+--------------------------------------------------------------- */
+.thin-rule {
+  height: 1px;
+  background: currentColor;
+  opacity: 0.18;
+}
+
+.micro-label {
+  font-family: var(--font-body);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #524d63;
+}
+
+/* Short accent rule under a single word — the restrained
+   alternative to gradient-filled headings. Used once per section
+   at most. */
+.accent-rule {
+  display: inline-block;
+  position: relative;
+}
+.accent-rule::after {
+  content: "";
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  bottom: -0.14em;
+  height: 2px;
+  background: linear-gradient(90deg, #a855f7, #9f1239);
+  opacity: 0.7;
+}
