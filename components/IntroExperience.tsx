@@ -9,6 +9,7 @@ const EASE_CINEMATIC = [0.16, 0.84, 0.44, 1] as const;
 
 export default function IntroExperience() {
   const prefersReducedMotion = useReducedMotion();
+
   const [phase, setPhase] = useState<
     "idle" | "enter" | "converge" | "collide" | "reveal" | "exit" | "done"
   >("idle");
@@ -23,6 +24,7 @@ export default function IntroExperience() {
         setPhase("done");
         document.body.classList.remove("locked");
       }, 1100);
+
       return () => {
         clearTimeout(t1);
         clearTimeout(t2);
@@ -41,21 +43,24 @@ export default function IntroExperience() {
         document.body.classList.remove("locked");
       }, 3900),
     ];
+
     return () => timers.forEach(clearTimeout);
   }, [prefersReducedMotion]);
 
   function skip() {
     setPhase("exit");
+
     setTimeout(() => {
       setPhase("done");
       document.body.classList.remove("locked");
     }, 500);
   }
 
-  if (phase === "done") return null;
+  const collided =
+    phase === "collide" || phase === "reveal" || phase === "exit";
 
-  const collided = phase === "collide" || phase === "reveal" || phase === "exit";
-  const revealed = phase === "reveal" || phase === "exit";
+  const revealed =
+    phase === "reveal" || phase === "exit";
 
   return (
     <AnimatePresence>
@@ -88,16 +93,27 @@ export default function IntroExperience() {
               ? { x: 0, opacity: 0, scale: 0.5 }
               : { x: "-18vw", opacity: 0.95, scale: 1 }
           }
-          transition={{ duration: collided ? 0.6 : 1.0, ease: EASE_CINEMATIC }}
+          transition={{
+            duration: collided ? 0.6 : 1.0,
+            ease: EASE_CINEMATIC,
+          }}
         >
           <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-full flex items-center justify-center">
             <div className="absolute -inset-6 rounded-full bg-vibeesta-500/30 blur-3xl" />
             <div className="absolute inset-0 rounded-full bg-vibeesta-400/25 blur-xl" />
             <div className="absolute inset-0 rounded-full border border-vibeesta-400/30" />
+
             <div className="relative w-14 h-14 md:w-20 md:h-20 rounded-full overflow-hidden">
-              <Image src={siteConfig.organizers.vibeesta.logoMark} alt="Vibeesta" fill sizes="80px" className="object-cover" />
+              <Image
+                src={siteConfig.organizers.vibeesta.logoMark}
+                alt="Vibeesta"
+                fill
+                sizes="80px"
+                className="object-cover"
+              />
             </div>
           </div>
+
           <span className="text-[11px] md:text-xs font-display font-semibold tracking-[0.3em] text-vibeesta-300">
             VIBEESTA
           </span>
@@ -112,16 +128,28 @@ export default function IntroExperience() {
               ? { x: 0, opacity: 0, scale: 0.5 }
               : { x: "18vw", opacity: 0.95, scale: 1 }
           }
-          transition={{ duration: collided ? 0.6 : 1.0, ease: EASE_CINEMATIC, delay: prefersReducedMotion ? 0 : 0.15 }}
+          transition={{
+            duration: collided ? 0.6 : 1.0,
+            ease: EASE_CINEMATIC,
+            delay: prefersReducedMotion ? 0 : 0.15,
+          }}
         >
           <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-full flex items-center justify-center">
             <div className="absolute -inset-6 rounded-full bg-shrinik-600/35 blur-3xl" />
             <div className="absolute inset-0 rounded-full bg-shrinik-700/30 blur-xl" />
             <div className="absolute inset-0 rounded-full border border-shrinik-600/30" />
+
             <div className="relative w-14 h-14 md:w-20 md:h-20 rounded-full overflow-hidden">
-              <Image src={siteConfig.organizers.shrinik.logo} alt="Shrinik Club" fill sizes="80px" className="object-cover" />
+              <Image
+                src={siteConfig.organizers.shrinik.logo}
+                alt="Shrinik Club"
+                fill
+                sizes="80px"
+                className="object-cover"
+              />
             </div>
           </div>
+
           <span className="text-[11px] md:text-xs font-display font-semibold tracking-[0.3em] text-shrinik-600">
             SHRINIK
           </span>
@@ -142,41 +170,86 @@ export default function IntroExperience() {
               ? { scale: 22, opacity: 0 }
               : { scale: 0, opacity: 0 }
           }
-          transition={{ duration: 0.7, ease: EASE_CINEMATIC }}
+          transition={{
+            duration: 0.7,
+            ease: EASE_CINEMATIC,
+          }}
         />
 
         {/* VIBRANT reveal */}
         <motion.div
           className="relative z-10 text-center px-6"
-          initial={{ opacity: 0, scale: 0.94, filter: "blur(6px)" }}
+          initial={{
+            opacity: 0,
+            scale: 0.94,
+            filter: "blur(6px)",
+          }}
           animate={
             revealed
-              ? { opacity: 1, scale: 1, filter: "blur(0px)" }
-              : { opacity: 0, scale: 0.94, filter: "blur(6px)" }
+              ? {
+                  opacity: 1,
+                  scale: 1,
+                  filter: "blur(0px)",
+                }
+              : {
+                  opacity: 0,
+                  scale: 0.94,
+                  filter: "blur(6px)",
+                }
           }
-          transition={{ duration: 0.7, ease: EASE_CINEMATIC }}
+          transition={{
+            duration: 0.7,
+            ease: EASE_CINEMATIC,
+          }}
         >
           <div className="fusion-text font-display font-extrabold uppercase text-[15vw] sm:text-[10vw] md:text-[7vw] leading-[0.9]">
             VIBRANT
           </div>
+
           <motion.div
             className="fusion-text font-display font-extrabold uppercase text-[15vw] sm:text-[10vw] md:text-[7vw] leading-[0.9]"
-            initial={{ opacity: 0, y: 10 }}
-            animate={revealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-            transition={{ duration: 0.5, delay: 0.25, ease: EASE_CINEMATIC }}
+            initial={{
+              opacity: 0,
+              y: 10,
+            }}
+            animate={
+              revealed
+                ? {
+                    opacity: 1,
+                    y: 0,
+                  }
+                : {
+                    opacity: 0,
+                    y: 10,
+                  }
+            }
+            transition={{
+              duration: 0.5,
+              delay: 0.25,
+              ease: EASE_CINEMATIC,
+            }}
           >
             2K26
           </motion.div>
+
           <motion.div
             className="mt-4 text-[11px] md:text-xs font-semibold tracking-[0.35em] text-ink-300"
             initial={{ opacity: 0 }}
-            animate={revealed ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.5, delay: 0.45 }}
+            animate={
+              revealed
+                ? { opacity: 1 }
+                : { opacity: 0 }
+            }
+            transition={{
+              duration: 0.5,
+              delay: 0.45,
+            }}
           >
             {siteConfig.tagline}
           </motion.div>
         </motion.div>
 
+        {/* Skip intro */}
         <button
           onClick={skip}
           className="absolute bottom-7 right-7 text-[11px] tracking-[0.14em] uppercase text-ink-500 hover:text-ink-0 border border-ink-700/40 rounded-full px-4 py-2.5 transition-colors"
