@@ -5,44 +5,50 @@ const FORM_ID = "1uYX4vDqEPbzwP3BykTyXOkw-e1KVkb-8wDtbFjAJO8E";
 
 export async function GET() {
   try {
-    const gasUrl = process.env.GOOGLE_APPS_SCRIPT_URL;
+    const CSV_URL = "https://docs.google.com/spreadsheets/d/1gCruFkwZk6tKs4KUCi-ntnql3g5xFBcpUBHT77L2cvY/gviz/tq?tqx=out:csv&gid=0";
 
-    if (!gasUrl) {
-      console.warn("Missing GOOGLE_APPS_SCRIPT_URL. Returning mock data for development.");
-      return NextResponse.json({
-        updatedAt: new Date().toISOString(),
-        leaderboard: [
-          { rank: 1, referralCode: "VIBE2026", registrations: 45 },
-          { rank: 2, referralCode: "AMBASSADOR-X", registrations: 38 },
-          { rank: 3, referralCode: "TECHFEST26", registrations: 31 },
-          { rank: 4, referralCode: "CAMPUS-PRO", registrations: 27 },
-          { rank: 5, referralCode: "INNOVATE", registrations: 19 },
-          { rank: 6, referralCode: "PIONEER", registrations: 14 },
-          { rank: 7, referralCode: "NEXUS", registrations: 11 },
-        ],
-      });
-    }
-
-    const response = await fetch(gasUrl, { cache: "no-store" });
+    const response = await fetch(CSV_URL, { next: { revalidate: 30 } });
     if (!response.ok) {
-      throw new Error(`Failed to fetch from GAS: ${response.statusText}`);
+      throw new Error(`Failed to fetch CSV: ${response.statusText}`);
     }
 
-    // The GAS script returns an object like: { "CODE1": 5, "CODE2": 2 }
-    const counts = await response.json();
+    const csvText = await response.text();
+    const lines = csvText.split(/\r?\n/);
+    
+    const countMap = new Map<string, number>();
 
-    if (counts.error) {
-      throw new Error(`GAS Error: ${counts.error}`);
+    for (const line of lines) {
+      // Split by comma, handling quotes (simplified for this specific sheet)
+      // The format is like: "Name","Code","Count",...
+      const cols = line.split('","').map(c => c.replace(/^"|"$/g, '').trim());
+      
+      // Check first group (cols 1 and 2)
+      if (cols.length > 2) {
+        const code1 = cols[1];
+        const count1 = parseInt(cols[2], 10);
+        if (code1 && !isNaN(count1) && count1 > 0) {
+          countMap.set(code1, Math.max(countMap.get(code1) || 0, count1));
+        }
+      }
+
+      // Check second group (cols 6 and 7)
+      if (cols.length > 7) {
+        const code2 = cols[6];
+        const count2 = parseInt(cols[7], 10);
+        if (code2 && !isNaN(count2) && count2 > 0) {
+          countMap.set(code2, Math.max(countMap.get(code2) || 0, count2));
+        }
+      }
     }
 
-    // Sort and format the top 10
-    const leaderboard = Object.entries(counts)
+    // Sort and format the top 20
+    const leaderboard = Array.from(countMap.entries())
       .map(([referralCode, registrations]) => ({
         referralCode,
-        registrations: registrations as number,
+        registrations,
       }))
       .sort((a, b) => b.registrations - a.registrations)
-      .slice(0, 10)
+      .slice(0, 20)
       .map((entry, index) => ({
         rank: index + 1,
         ...entry,

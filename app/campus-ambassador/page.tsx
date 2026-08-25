@@ -23,10 +23,10 @@ export default function CampusAmbassadorPage() {
           <p className="text-[12px] font-semibold tracking-[0.28em] uppercase text-ink-500 mb-4">
             {siteConfig.eventName}
           </p>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-display font-black tracking-tight">
             CAMPUS <span className="accent-rule">AMBASSADOR</span>
           </h1>
-          <p className="mt-6 max-w-2xl mx-auto text-ink-300 text-[14.5px] leading-relaxed">
+          <p className="mt-6 max-w-2xl mx-auto text-ink-300 text-[13px] sm:text-[14.5px] leading-relaxed px-4">
             Invite your peers to experience VIBRANT 2K26. The top referrers will earn exclusive rewards, VIP access, and special recognition during the closing ceremony.
           </p>
         </div>

@@ -62,6 +62,8 @@ export default function IntroExperience() {
   const revealed =
     phase === "reveal" || phase === "exit";
 
+  if (phase === "done") return null;
+
   return (
     <AnimatePresence>
       <motion.div

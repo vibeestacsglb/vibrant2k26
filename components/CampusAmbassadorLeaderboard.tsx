@@ -67,9 +67,9 @@ export default function CampusAmbassadorLeaderboard() {
 
   return (
     <div className="w-full max-w-4xl mx-auto">
-      <div className="flex items-center justify-between mb-6 border-b border-ink-700/30 pb-4">
-        <h2 className="text-2xl md:text-3xl font-display font-bold">
-          TOP 10 <span className="accent-rule">AMBASSADORS</span>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 border-b border-ink-700/30 pb-4">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-display font-bold">
+          TOP 20 <span className="accent-rule">AMBASSADORS</span>
         </h2>
         
         <div className="flex items-center gap-2 text-ink-500 text-xs">
@@ -92,7 +92,7 @@ export default function CampusAmbassadorLeaderboard() {
       <div className="bg-base-900 border border-ink-700/20 rounded-xl overflow-hidden shadow-2xl relative">
         <div className="absolute top-0 left-0 right-0 h-1 fusion-gradient opacity-80" />
         
-        <div className="grid grid-cols-12 gap-4 p-4 text-[11px] font-semibold tracking-[0.16em] uppercase text-ink-500 border-b border-ink-700/20">
+        <div className="grid grid-cols-12 gap-2 sm:gap-4 p-3 sm:p-4 text-[9px] sm:text-[11px] font-semibold tracking-[0.1em] sm:tracking-[0.16em] uppercase text-ink-500 border-b border-ink-700/20">
           <div className="col-span-2 text-center">Rank</div>
           <div className="col-span-7">Referral Code</div>
           <div className="col-span-3 text-right">Registrations</div>
@@ -101,10 +101,10 @@ export default function CampusAmbassadorLeaderboard() {
         {isLoading && !data ? (
           <div className="flex flex-col">
             {[...Array(5)].map((_, i) => (
-              <div key={i} className="grid grid-cols-12 gap-4 p-5 items-center border-b border-ink-700/10 last:border-0 animate-pulse">
-                <div className="col-span-2 mx-auto h-6 w-6 bg-ink-700/20 rounded-full" />
-                <div className="col-span-7 h-5 w-32 bg-ink-700/20 rounded" />
-                <div className="col-span-3 ml-auto h-5 w-12 bg-ink-700/20 rounded" />
+              <div key={i} className="grid grid-cols-12 gap-2 sm:gap-4 p-3 sm:p-5 items-center border-b border-ink-700/10 last:border-0 animate-pulse">
+                <div className="col-span-2 mx-auto h-5 w-5 sm:h-6 sm:w-6 bg-ink-700/20 rounded-full" />
+                <div className="col-span-7 h-4 sm:h-5 w-24 sm:w-32 bg-ink-700/20 rounded" />
+                <div className="col-span-3 ml-auto h-4 sm:h-5 w-8 sm:w-12 bg-ink-700/20 rounded" />
               </div>
             ))}
           </div>
@@ -116,15 +116,15 @@ export default function CampusAmbassadorLeaderboard() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
-                className={`grid grid-cols-12 gap-4 p-5 items-center border-b last:border-0 transition-colors hover:bg-white/[0.02] ${getRankStyle(entry.rank)}`}
+                className={`grid grid-cols-12 gap-2 sm:gap-4 p-3 sm:p-5 items-center border-b last:border-0 transition-colors hover:bg-white/[0.02] ${getRankStyle(entry.rank)}`}
               >
-                <div className="col-span-2 text-center">
+                <div className="col-span-2 text-center flex justify-center scale-90 sm:scale-100">
                   {getRankBadge(entry.rank)}
                 </div>
-                <div className="col-span-7 font-display tracking-widest text-[15px] md:text-lg">
+                <div className="col-span-7 font-display tracking-wider sm:tracking-widest text-[13px] sm:text-[15px] md:text-lg truncate">
                   {entry.referralCode}
                 </div>
-                <div className="col-span-3 text-right font-display text-[15px] md:text-lg">
+                <div className="col-span-3 text-right font-display text-[13px] sm:text-[15px] md:text-lg">
                   {entry.registrations}
                 </div>
               </motion.div>
