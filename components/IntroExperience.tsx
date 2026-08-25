@@ -74,7 +74,7 @@ export default function IntroExperience() {
         role="presentation"
         aria-hidden="true"
       >
-        {/* subtle grid */}
+        {/* Subtle grid */}
         <div
           className="absolute inset-0 opacity-40"
           style={{
@@ -100,12 +100,12 @@ export default function IntroExperience() {
             ease: EASE_CINEMATIC,
           }}
         >
-          <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-full flex items-center justify-center">
+          <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-full flex items-center justify-center">
             <div className="absolute -inset-6 rounded-full bg-vibeesta-500/30 blur-3xl" />
             <div className="absolute inset-0 rounded-full bg-vibeesta-400/25 blur-xl" />
             <div className="absolute inset-0 rounded-full border border-vibeesta-400/30" />
 
-            <div className="relative w-14 h-14 md:w-20 md:h-20 rounded-full overflow-hidden">
+            <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-20 md:h-20 rounded-full overflow-hidden">
               <Image
                 src={siteConfig.organizers.vibeesta.logoMark}
                 alt="Vibeesta"
@@ -116,7 +116,7 @@ export default function IntroExperience() {
             </div>
           </div>
 
-          <span className="text-[11px] md:text-xs font-display font-semibold tracking-[0.3em] text-vibeesta-300">
+          <span className="text-[10px] sm:text-[11px] md:text-xs font-display font-semibold tracking-[0.3em] text-vibeesta-300">
             VIBEESTA
           </span>
         </motion.div>
@@ -136,12 +136,12 @@ export default function IntroExperience() {
             delay: prefersReducedMotion ? 0 : 0.15,
           }}
         >
-          <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-full flex items-center justify-center">
+          <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-full flex items-center justify-center">
             <div className="absolute -inset-6 rounded-full bg-shrinik-600/35 blur-3xl" />
             <div className="absolute inset-0 rounded-full bg-shrinik-700/30 blur-xl" />
             <div className="absolute inset-0 rounded-full border border-shrinik-600/30" />
 
-            <div className="relative w-14 h-14 md:w-20 md:h-20 rounded-full overflow-hidden">
+            <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-20 md:h-20 rounded-full overflow-hidden">
               <Image
                 src={siteConfig.organizers.shrinik.logo}
                 alt="Shrinik Club"
@@ -152,12 +152,12 @@ export default function IntroExperience() {
             </div>
           </div>
 
-          <span className="text-[11px] md:text-xs font-display font-semibold tracking-[0.3em] text-shrinik-600">
+          <span className="text-[10px] sm:text-[11px] md:text-xs font-display font-semibold tracking-[0.3em] text-shrinik-600">
             SHRINIK
           </span>
         </motion.div>
 
-        {/* collision fusion flash — restrained, not an explosion */}
+        {/* Collision fusion flash */}
         <motion.div
           className="absolute w-4 h-4 rounded-full"
           style={{
@@ -180,7 +180,7 @@ export default function IntroExperience() {
 
         {/* VIBRANT reveal */}
         <motion.div
-          className="relative z-10 text-center px-6"
+          className="relative z-10 text-center px-4 sm:px-6"
           initial={{
             opacity: 0,
             scale: 0.94,
@@ -235,7 +235,7 @@ export default function IntroExperience() {
           </motion.div>
 
           <motion.div
-            className="mt-4 text-[11px] md:text-xs font-semibold tracking-[0.35em] text-ink-300"
+            className="mt-4 text-[10px] sm:text-[11px] md:text-xs font-semibold tracking-[0.32em] sm:tracking-[0.35em] text-ink-300"
             initial={{ opacity: 0 }}
             animate={
               revealed
@@ -251,10 +251,14 @@ export default function IntroExperience() {
           </motion.div>
         </motion.div>
 
-        {/* Skip intro */}
+        {/* Skip intro — safe-area aware positioning */}
         <button
           onClick={skip}
-          className="absolute bottom-7 right-7 text-[11px] tracking-[0.14em] uppercase text-ink-500 hover:text-ink-0 border border-ink-700/40 rounded-full px-4 py-2.5 transition-colors"
+          className="absolute text-[11px] tracking-[0.14em] uppercase text-ink-500 hover:text-ink-0 border border-ink-700/40 rounded-full px-4 py-2.5 transition-colors bg-base-950/40 backdrop-blur-sm hover:bg-base-950/60"
+          style={{
+            bottom: "calc(1.75rem + env(safe-area-inset-bottom, 0px))",
+            right: "1.25rem",
+          }}
         >
           Skip Intro
         </button>

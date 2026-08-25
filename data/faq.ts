@@ -28,6 +28,6 @@ export const faq: FaqItem[] = [
   {
     question: "What is the prize pool?",
     answer:
-      "The total prize pool across all events is approximately ₹6,00,000+. Event-wise breakdowns will be announced closer to the fest.",
+      "The total prize pool across all events is approximately ₹4,00,000+. Event-wise breakdowns will be announced closer to the fest.",
   },
 ];

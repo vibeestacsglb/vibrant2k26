@@ -31,11 +31,11 @@ export default function Countdown() {
     return () => clearInterval(id);
   }, []);
 
-  if (!remaining) return <section className="py-10" aria-hidden="true" />;
+  if (!remaining) return <section className="py-10 border-t border-ink-700/15" aria-hidden="true" />;
 
   if (remaining.status === "live") {
     return (
-      <section className="py-16 md:py-20 text-center">
+      <section className="py-16 md:py-20 text-center border-t border-ink-700/15">
         <div className="fusion-text font-display font-extrabold text-3xl md:text-5xl">
           VIBRANT 2K26 IS LIVE
         </div>
@@ -45,7 +45,7 @@ export default function Countdown() {
 
   if (remaining.status === "ended") {
     return (
-      <section className="py-16 md:py-20 text-center">
+      <section className="py-16 md:py-20 text-center border-t border-ink-700/15">
         <div className="fusion-text font-display font-extrabold text-2xl md:text-4xl">
           THANK YOU FOR BEING PART OF VIBRANT 2K26
         </div>
@@ -61,23 +61,24 @@ export default function Countdown() {
   ];
 
   return (
-    <section className="pb-20 md:pb-24 text-center">
-      <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-ink-500 mb-6">
+    <section className="pb-20 md:pb-24 pt-12 md:pt-16 text-center border-t border-ink-700/15">
+      <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-ink-500 mb-8">
         Vibrant Begins In
       </p>
-      <div className="flex items-baseline justify-center gap-1 md:gap-2 flex-wrap">
+      <div className="flex items-baseline justify-center gap-0 flex-wrap">
         {units.map((u, i) => (
           <div key={u.label} className="flex items-baseline">
-            <div className="flex flex-col items-center px-3 md:px-6">
-              <span className="font-display font-extrabold tabular-nums text-4xl md:text-6xl lg:text-7xl text-ink-0">
+            <div className="flex flex-col items-center px-4 sm:px-5 md:px-7">
+              {/* min-w prevents layout shift as digits change */}
+              <span className="font-display font-extrabold tabular-nums text-5xl sm:text-6xl md:text-7xl text-ink-0 min-w-[2ch] text-center">
                 {String(u.value).padStart(2, "0")}
               </span>
-              <span className="text-[10px] font-semibold tracking-[0.2em] uppercase text-ink-500 mt-1.5">
+              <span className="text-[10px] font-semibold tracking-[0.2em] uppercase text-ink-500 mt-2">
                 {u.label}
               </span>
             </div>
             {i < units.length - 1 && (
-              <span className="hidden sm:inline font-display text-2xl md:text-3xl text-ink-700 -translate-y-2">
+              <span className="font-display text-xl sm:text-2xl md:text-3xl text-ink-700 -translate-y-3 select-none">
                 :
               </span>
             )}

@@ -118,7 +118,7 @@ hasn't confirmed information yet, the site honestly says so:
 - Registration is disabled until `registrationUrl` is set
 
 The only confirmed facts already wired in are: event name, tagline,
-dates (16–17 Oct 2026), venue, the ₹6,00,000+ prize pool total, the
+dates (16–17 Oct 2026), venue, the ₹4,00,000+ prize pool total, the
 four Tech events and six Creative events named in the brief, and the
 Vibeesta/Shrinik brand identities (using your actual uploaded logos).
 

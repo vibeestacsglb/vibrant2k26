@@ -5,6 +5,10 @@
 :root {
   --font-display: "Unbounded", sans-serif;
   --font-body: "Inter", sans-serif;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
 }
 
 * {
@@ -47,6 +51,11 @@ h4 {
   line-height: 1;
 }
 
+/* Anchor sections — offset by navbar height so hash links don't hide under nav */
+[id] {
+  scroll-margin-top: 80px;
+}
+
 ::selection {
   background: #9f1239;
   color: #f5f3f7;
@@ -73,10 +82,10 @@ h4 {
   top: 16px;
 }
 
-/* Restrained, single-purpose fusion gradient. Used sparingly —
-   only on the primary CTA and the VIBRANT wordmark — never on
-   every heading. Multi-stop so it reads as genuine energy
-   (violet → magenta → crimson), not a flat two-color blend. */
+/* ---------------------------------------------------------------
+   FUSION GRADIENT — primary brand identity gradient.
+   Used ONLY on primary CTA buttons and VIBRANT wordmark.
+--------------------------------------------------------------- */
 .fusion-gradient {
   background-image: linear-gradient(
     100deg,
@@ -99,7 +108,78 @@ h4 {
   color: transparent;
 }
 
-/* Gold system — reserved for the prize pool moment only. */
+/* ---------------------------------------------------------------
+   BUTTON UTILITIES — unified design system for all CTAs.
+   Replaces ad-hoc button classes scattered across 8+ components.
+--------------------------------------------------------------- */
+
+/* Primary: fusion gradient pill with glow */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #f5f3f7;
+  padding: 1rem 2rem;
+  transition: transform 0.25s cubic-bezier(.16,.84,.44,1),
+              box-shadow 0.25s cubic-bezier(.16,.84,.44,1);
+  background-image: linear-gradient(
+    100deg,
+    #6d28d9 0%,
+    #a855f7 32%,
+    #db2777 66%,
+    #e11d48 100%
+  );
+  box-shadow: 0 8px 30px -8px rgba(168, 85, 247, 0.45),
+              0 4px 12px -4px rgba(219, 39, 119, 0.3);
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px -8px rgba(168, 85, 247, 0.55),
+              0 6px 16px -4px rgba(219, 39, 119, 0.4);
+}
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 16px -6px rgba(168, 85, 247, 0.4);
+}
+
+/* Ghost: border pill, muted — "Registration Opening Soon" state */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #b8b3c4;
+  padding: 1rem 2rem;
+  border: 1px solid rgba(82, 77, 99, 0.5);
+  transition: color 0.2s ease, border-color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-ghost:hover {
+  color: #f5f3f7;
+  border-color: rgba(124, 118, 144, 0.6);
+}
+
+/* Small variant modifiers */
+.btn-sm {
+  font-size: 0.8125rem;
+  padding: 0.625rem 1.25rem;
+}
+
+/* Large variant modifier */
+.btn-lg {
+  font-size: 0.9375rem;
+  padding: 1.25rem 2.5rem;
+}
+
+/* Gold system — reserved for prize pool only */
 .gold-text {
   background-image: linear-gradient(100deg, #e8c988 0%, #c9a24b 55%, #9c7a34 100%);
   -webkit-background-clip: text;
@@ -107,9 +187,9 @@ h4 {
   color: transparent;
 }
 
-/* Atmosphere — layered radial energy used behind the hero, prize
-   pool and final CTA. Not a flat wash: two offset color blobs plus
-   a soft light-leak diagonal, all well under full opacity. */
+/* ---------------------------------------------------------------
+   ATMOSPHERE — layered radial energy behind hero, prize pool, CTA
+--------------------------------------------------------------- */
 .atmosphere-violet {
   background: radial-gradient(circle, rgba(124, 58, 237, 0.5), transparent 70%);
   filter: blur(60px);
@@ -142,13 +222,30 @@ h4 {
   }
 }
 
+/* ---------------------------------------------------------------
+   CONTAINER — consistent page-width wrapper with responsive padding
+--------------------------------------------------------------- */
 .container-content {
   width: 100%;
   max-width: 1360px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+@media (min-width: 480px) {
+  .container-content {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+@media (min-width: 640px) {
+  .container-content {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -158,11 +255,23 @@ h4 {
   }
 }
 
+@media (min-width: 1024px) {
+  .container-content {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-content {
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+}
+
 /* ---------------------------------------------------------------
-   FILM GRAIN — a fixed, extremely faint noise layer applied once
-   at the root. Purpose: stop the interface from reading as
-   digitally-perfect / AI-generated. It should never be consciously
-   noticeable; if you can clearly see it, the opacity is too high.
+   FILM GRAIN — a fixed, extremely faint noise layer.
+   Should never be consciously noticeable.
 --------------------------------------------------------------- */
 .grain-overlay {
   position: fixed;
@@ -174,9 +283,7 @@ h4 {
 }
 
 /* ---------------------------------------------------------------
-   FINE-LINE MOTIF — the recurring thin-line / orbit visual
-   signature used sparingly across Hero, About, Prize Pool,
-   Organizers and the final CTA. Never glowing, never thick.
+   FINE-LINE MOTIF SYSTEM
 --------------------------------------------------------------- */
 .thin-rule {
   height: 1px;
@@ -186,16 +293,14 @@ h4 {
 
 .micro-label {
   font-family: var(--font-body);
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #524d63;
 }
 
-/* Short accent rule under a single word — the restrained
-   alternative to gradient-filled headings. Used once per section
-   at most. */
+/* Short accent rule under a single word */
 .accent-rule {
   display: inline-block;
   position: relative;
@@ -209,4 +314,36 @@ h4 {
   height: 2px;
   background: linear-gradient(90deg, #a855f7, #9f1239);
   opacity: 0.7;
+}
+
+/* ---------------------------------------------------------------
+   SCROLLBAR UTILITIES
+--------------------------------------------------------------- */
+
+/* Hide scrollbar entirely (keep scroll functionality) */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Thin styled scrollbar for horizontal timelines */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(124, 118, 144, 0.3) transparent;
+}
+.scrollbar-thin::-webkit-scrollbar {
+  height: 3px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(124, 118, 144, 0.3);
+  border-radius: 2px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 85, 247, 0.4);
 }

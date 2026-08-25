@@ -8,7 +8,7 @@ export default function Sponsors() {
   const hasSponsors = sponsors.length > 0;
 
   return (
-    <section id="sponsors" className="py-28 md:py-36">
+    <section id="sponsors" className="py-24 sm:py-28 md:py-36">
       <div className="container-content text-center">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -19,7 +19,7 @@ export default function Sponsors() {
           <p className="text-[12px] font-semibold tracking-[0.28em] uppercase text-ink-500 mb-4">
             Backed By
           </p>
-          <h2 className="text-4xl md:text-5xl mb-14">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl mb-12 md:mb-14">
             POWERED BY THOSE
             <br />
             WHO BELIEVE IN <span className="accent-rule">IDEAS.</span>
@@ -35,16 +35,16 @@ export default function Sponsors() {
                 <p className="text-[10.5px] font-semibold tracking-[0.24em] uppercase text-ink-500 mb-6">
                   {tier}
                 </p>
-                <div className="flex flex-wrap justify-center gap-8">
+                <div className="flex flex-wrap justify-center gap-5 sm:gap-7 md:gap-8">
                   {tierSponsors.map((s) => (
                     <div
                       key={s.id}
-                      className="relative w-32 h-14 grayscale opacity-50 hover:opacity-100 hover:grayscale-0 transition-all duration-300"
+                      className="relative w-28 sm:w-32 h-12 sm:h-14 grayscale opacity-50 hover:opacity-100 hover:grayscale-0 transition-all duration-300"
                     >
                       {s.logo ? (
                         <Image src={s.logo} alt={s.name} fill sizes="128px" className="object-contain" />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-[11px] text-ink-500 border border-ink-700/25">
+                        <div className="w-full h-full flex items-center justify-center text-[11px] text-ink-500 border border-ink-700/25 bg-ink-700/10 rounded-sm">
                           {s.name}
                         </div>
                       )}
@@ -55,9 +55,11 @@ export default function Sponsors() {
             );
           })
         ) : (
-          <p className="text-ink-500 text-sm font-medium tracking-[0.06em]">
-            Sponsor announcements coming soon.
-          </p>
+          <div className="border border-ink-700/20 bg-ink-700/5 rounded-sm py-12 px-8 max-w-sm mx-auto">
+            <p className="micro-label text-center">
+              Sponsor announcements coming soon.
+            </p>
+          </div>
         )}
       </div>
     </section>

@@ -1,18 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useId } from "react";
 import { Plus } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { faq } from "@/data/faq";
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const instanceId = useId();
 
   return (
-    <section id="faq" className="py-28 md:py-36">
+    <section id="faq" className="py-24 sm:py-28 md:py-36">
       <div className="container-content max-w-2xl mx-auto">
         <motion.div
-          className="text-center mb-14"
+          className="text-center mb-12 md:mb-14"
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -21,37 +22,54 @@ export default function FAQ() {
           <p className="text-[12px] font-semibold tracking-[0.28em] uppercase text-ink-500 mb-4">
             Questions
           </p>
-          <h2 className="text-4xl md:text-5xl">FAQ</h2>
+          <h2 className="text-4xl sm:text-5xl">FAQ</h2>
         </motion.div>
 
         <div>
           {faq.map((item, i) => {
             const isOpen = openIndex === i;
+            const panelId = `${instanceId}-faq-panel-${i}`;
+            const triggerId = `${instanceId}-faq-trigger-${i}`;
             return (
               <div key={i} className="border-b border-ink-700/20">
                 <button
+                  id={triggerId}
                   onClick={() => setOpenIndex(isOpen ? null : i)}
                   aria-expanded={isOpen}
-                  className="w-full flex items-center justify-between gap-6 py-6 text-left"
+                  aria-controls={panelId}
+                  className="w-full flex items-center justify-between gap-6 py-5 sm:py-6 text-left group"
                 >
-                  <span className="text-[15.5px] md:text-base font-medium text-ink-0">
+                  <span className="text-[15px] md:text-[16px] font-medium text-ink-0 group-hover:text-ink-0 transition-colors">
                     {item.question}
                   </span>
                   <Plus
-                    size={18}
+                    size={20}
                     className={`shrink-0 text-ink-500 transition-transform duration-300 ${
-                      isOpen ? "rotate-45 text-shrinik-600" : ""
+                      isOpen ? "rotate-45 text-shrinik-600" : "group-hover:text-ink-300"
                     }`}
                   />
                 </button>
-                <div
-                  className="overflow-hidden transition-all duration-400"
-                  style={{ maxHeight: isOpen ? "200px" : "0px" }}
-                >
-                  <p className="pb-6 text-[14px] text-ink-300 leading-relaxed pr-8">
-                    {item.answer || "Coming Soon"}
-                  </p>
-                </div>
+
+                {/* Framer Motion accordion — no maxHeight clipping */}
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      id={panelId}
+                      role="region"
+                      aria-labelledby={triggerId}
+                      key="content"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: [0.16, 0.84, 0.44, 1] }}
+                      style={{ overflow: "hidden" }}
+                    >
+                      <p className="pb-6 text-[14px] text-ink-300 leading-relaxed pr-8">
+                        {item.answer || "Coming Soon"}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             );
           })}

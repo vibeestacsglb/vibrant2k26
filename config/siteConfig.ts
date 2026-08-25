@@ -18,7 +18,7 @@ export const siteConfig = {
 
   venue: "G.L. Bajaj Institute of Technology & Management",
 
-  prizePool: "₹6,00,000+",
+  prizePool: "₹4,00,000+",
   prizePoolSupport: "Worth of prizes & rewards",
 
   // Replace with the live external registration link when available.

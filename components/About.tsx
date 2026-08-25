@@ -8,7 +8,7 @@ import { siteConfig } from "@/config/siteConfig";
 
 export default function About() {
   return (
-    <section id="about" className="py-28 md:py-40 relative overflow-hidden">
+    <section id="about" className="py-24 sm:py-28 md:py-40 relative overflow-hidden">
       <Atmosphere variant="fusion" className="opacity-30" />
       <OrbitRing
         size={480}
@@ -16,8 +16,8 @@ export default function About() {
         className="absolute right-[-10%] top-[-10%] pointer-events-none hidden lg:block"
       />
 
-      <div className="container-content relative grid md:grid-cols-12 gap-10 md:gap-6 items-start">
-        {/* heading — left column, not centered */}
+      <div className="container-content relative grid md:grid-cols-12 gap-12 md:gap-8 items-start">
+        {/* Heading — left column */}
         <motion.div
           className="md:col-span-7"
           initial={{ opacity: 0, y: 26 }}
@@ -26,23 +26,23 @@ export default function About() {
           transition={{ duration: 0.7, ease: [0.16, 0.84, 0.44, 1] }}
         >
           <p className="micro-label mb-5">{siteConfig.brandStory}</p>
-          <h2 className="text-[11vw] sm:text-6xl md:text-7xl leading-[1.0]">
+          <h2 className="text-[11vw] sm:text-6xl md:text-7xl xl:text-8xl leading-[1.0]">
             TWO WORLDS.
             <br />
             ONE <span className="accent-rule">VIBRANT</span>
             <br />
             EXPERIENCE.
           </h2>
-          <p className="mt-9 max-w-md text-[15px] leading-relaxed text-ink-300">
+          <p className="mt-8 md:mt-9 max-w-md text-[14px] sm:text-[15px] leading-relaxed text-ink-300">
             VIBRANT 2K26 brings technology, innovation, creativity, music,
             film, fashion, performing arts and ideas together on one stage —
             two days, two identities, one festival.
           </p>
         </motion.div>
 
-        {/* brand diagram — offset right column, sits lower than the heading */}
+        {/* Brand diagram — offset right column */}
         <motion.div
-          className="md:col-span-5 md:mt-24 flex flex-col items-start md:items-end gap-0"
+          className="md:col-span-5 md:pt-16 flex flex-col items-start md:items-end gap-0"
           initial={{ opacity: 0, y: 26 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}

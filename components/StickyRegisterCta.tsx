@@ -18,22 +18,28 @@ export default function StickyRegisterCta() {
 
   return (
     <div
-      className={`fixed bottom-5 left-1/2 -translate-x-1/2 z-[150] transition-all duration-500 sm:hidden ${
-        show ? "translate-y-0 opacity-100" : "translate-y-24 opacity-0 pointer-events-none"
+      className={`fixed left-1/2 z-[150] sm:hidden transition-all duration-500 ${
+        show
+          ? "opacity-100 pointer-events-auto"
+          : "opacity-0 pointer-events-none"
       }`}
-      style={{ transform: `translateX(-50%) translateY(${show ? 0 : 96}px)` }}
+      style={{
+        /* Single source of truth — no conflicting className transforms */
+        bottom: "calc(1.25rem + env(safe-area-inset-bottom, 0px))",
+        transform: `translateX(-50%) translateY(${show ? "0px" : "96px"})`,
+      }}
     >
       {registrationUrl ? (
         <a
           href={registrationUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full fusion-gradient text-ink-0 text-[13px] font-semibold px-6 py-3.5 shadow-lg shadow-black/40"
+          className="inline-flex items-center gap-2 rounded-full fusion-gradient text-ink-0 text-[13px] font-semibold px-6 py-4 shadow-lg shadow-black/40"
         >
           Register Now →
         </a>
       ) : (
-        <span className="inline-flex items-center rounded-full border border-ink-700/50 bg-base-950/90 backdrop-blur text-ink-300 text-[12px] font-medium px-6 py-3.5">
+        <span className="inline-flex items-center rounded-full border border-ink-700/50 bg-base-950/90 backdrop-blur text-ink-300 text-[12px] font-medium px-6 py-4">
           Registration Opening Soon
         </span>
       )}

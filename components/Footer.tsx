@@ -15,23 +15,28 @@ const LINKS = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-ink-700/20 py-16 md:py-20">
+    <footer className="border-t border-ink-700/20 py-14 md:py-20">
       <div className="container-content">
-        <div className="flex flex-wrap items-end justify-between gap-8 mb-12">
+        {/* Top row */}
+        <div className="flex flex-wrap items-end justify-between gap-6 mb-10 md:mb-12">
           <div>
-            <div className="text-ink-0 font-display font-extrabold text-4xl md:text-5xl">
-              VIBRANT<span className="text-ink-700 text-lg align-super ml-2">2K26</span>
+            <div className="text-ink-0 font-display font-extrabold text-3xl md:text-4xl">
+              VIBRANT<span className="text-ink-700 text-base align-super ml-2">2K26</span>
             </div>
             <div className="text-[11px] font-semibold tracking-[0.16em] uppercase text-ink-500 mt-2">
               Vibeesta × Shrinik
             </div>
           </div>
-          <div className="text-[12.5px] text-ink-500 text-right">
+          <div className="text-[12px] sm:text-[12.5px] text-ink-500 text-right max-w-[200px] sm:max-w-none leading-relaxed">
             {siteConfig.venue}
           </div>
         </div>
 
-        <nav className="flex flex-wrap gap-x-6 gap-y-3 pt-8 border-t border-ink-700/15 mb-10">
+        {/* Nav links */}
+        <nav
+          aria-label="Footer navigation"
+          className="flex flex-wrap gap-x-5 gap-y-2.5 pt-8 border-t border-ink-700/15 mb-8 md:mb-10"
+        >
           {LINKS.map((l) => (
             <Link
               key={l.label}
@@ -43,7 +48,8 @@ export default function Footer() {
           ))}
         </nav>
 
-        <div className="flex flex-wrap justify-between gap-2 text-[11.5px] text-ink-500">
+        {/* Bottom bar */}
+        <div className="flex flex-col sm:flex-row flex-wrap justify-between gap-2 text-[11px] sm:text-[11.5px] text-ink-500">
           <span>© 2026 VIBRANT 2K26. All Rights Reserved.</span>
           <span>{siteConfig.organizers.vibeesta.name} × {siteConfig.organizers.shrinik.name}</span>
         </div>

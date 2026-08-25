@@ -9,10 +9,10 @@ export default function Schedule() {
   const day = schedule.find((d) => d.day === activeDay);
 
   return (
-    <section id="schedule" className="py-28 md:py-36">
+    <section id="schedule" className="py-24 sm:py-28 md:py-36">
       <div className="container-content">
         <motion.div
-          className="text-center mb-14"
+          className="text-center mb-12 md:mb-14"
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -21,42 +21,49 @@ export default function Schedule() {
           <p className="text-[12px] font-semibold tracking-[0.28em] uppercase text-ink-500 mb-4">
             Two Days
           </p>
-          <h2 className="text-5xl md:text-6xl">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl">
             THE <span className="accent-rule">TIMELINE.</span>
           </h2>
         </motion.div>
 
-        <div className="flex justify-center gap-1 mb-14">
-          {schedule.map((d) => (
-            <button
-              key={d.day}
-              onClick={() => setActiveDay(d.day)}
-              className={`px-7 py-3 text-[12.5px] font-semibold tracking-[0.1em] uppercase border transition-colors ${
-                activeDay === d.day
-                  ? "border-vibeesta-400/50 text-ink-0 bg-vibeesta-600/10"
-                  : "border-ink-700/30 text-ink-500 hover:text-ink-300"
-              }`}
-            >
-              {d.dateLabel}
-            </button>
-          ))}
+        {/* Day toggle — horizontally scrollable if more days are added */}
+        <div className="flex justify-center mb-12 md:mb-14 overflow-x-auto pb-2">
+          <div className="flex gap-2">
+            {schedule.map((d) => (
+              <button
+                key={d.day}
+                onClick={() => setActiveDay(d.day)}
+                className={`px-6 sm:px-7 py-3 text-[12px] sm:text-[12.5px] font-semibold tracking-[0.1em] uppercase border transition-colors rounded-sm whitespace-nowrap ${
+                  activeDay === d.day
+                    ? "border-vibeesta-400/60 text-ink-0 bg-vibeesta-600/15"
+                    : "border-ink-700/30 text-ink-500 hover:text-ink-300 hover:bg-ink-700/10"
+                }`}
+              >
+                {d.dateLabel}
+              </button>
+            ))}
+          </div>
         </div>
 
         {day?.items && day.items.length > 0 ? (
-          <div className="flex md:flex-row flex-col gap-0 md:overflow-x-auto pb-4">
+          <div className="flex md:flex-row flex-col gap-0 md:overflow-x-auto scrollbar-hide pb-4">
             {day.items.map((item, i) => (
               <div
                 key={i}
-                className="relative md:min-w-[210px] md:px-6 pl-6 pb-8 md:pb-0 border-l md:border-l md:border-t-0 border-ink-700/25 first:border-l-0"
+                className="relative md:min-w-[210px] md:px-6 pl-9 pb-10 md:pb-0 border-l md:border-l md:border-t-0 border-ink-700/25 first:border-l-0 md:first:pl-0"
               >
-                <span className="absolute md:top-0 top-1 -left-[5px] w-2.5 h-2.5 rounded-full bg-vibeesta-400" />
+                {/* Timeline dot with ring for depth */}
+                <span className="absolute md:top-0 top-1.5 -left-[6px] w-3 h-3 rounded-full bg-vibeesta-400 ring-2 ring-base-950" />
                 <div className="font-display font-bold text-lg text-ink-0 mb-1">{item.time}</div>
-                <div className="text-[13.5px] text-ink-300">{item.title}</div>
+                <div className="text-[13.5px] font-semibold text-ink-0 leading-snug">{item.title}</div>
+                {item.note && (
+                  <div className="text-[12px] text-ink-500 mt-1 leading-normal">{item.note}</div>
+                )}
               </div>
             ))}
           </div>
         ) : (
-          <p className="text-center text-ink-500 text-sm font-medium tracking-[0.08em] uppercase">
+          <p className="text-center text-ink-500 text-sm font-medium tracking-[0.08em] uppercase py-8">
             Schedule Coming Soon
           </p>
         )}

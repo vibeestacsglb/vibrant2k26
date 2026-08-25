@@ -56,71 +56,72 @@ export default function Navbar() {
       <nav
         className={`fixed top-0 left-0 right-0 z-[200] transition-all duration-500 ${
           scrolled
-            ? "bg-base-950/80 backdrop-blur-md border-b border-ink-700/30 py-3"
-            : "bg-transparent py-6"
+            ? "bg-base-950/85 backdrop-blur-md border-b border-ink-700/30 py-3"
+            : "bg-transparent py-5 md:py-6"
         }`}
       >
         <div className="container-content flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5 shrink-0" aria-label="VIBRANT 2K26 home">
-            <span className="relative w-6 h-6 rounded-sm overflow-hidden">
+            <span className="relative w-8 h-8 rounded-sm overflow-hidden flex-shrink-0">
               <Image
                 src={siteConfig.organizers.vibeesta.logoMark}
                 alt=""
                 fill
-                sizes="24px"
+                sizes="32px"
                 className="object-cover"
               />
             </span>
-            <span className="text-[11px] font-display font-semibold tracking-[0.08em] text-vibeesta-300">
+            <span className="text-[11px] font-display font-semibold tracking-[0.08em] text-vibeesta-300 leading-none">
               VIBEESTA
             </span>
-            <span className="text-ink-500 text-xs">×</span>
-            <span className="relative w-6 h-6 rounded-full overflow-hidden">
+            <span className="text-ink-500 text-xs px-0.5">×</span>
+            <span className="relative w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
               <Image
                 src={siteConfig.organizers.shrinik.logo}
                 alt=""
                 fill
-                sizes="24px"
+                sizes="32px"
                 className="object-cover"
               />
             </span>
-            <span className="text-[11px] font-display font-semibold tracking-[0.08em] text-shrinik-600">
+            <span className="text-[11px] font-display font-semibold tracking-[0.08em] text-shrinik-600 leading-none">
               SHRINIK
             </span>
           </Link>
 
+          {/* Desktop nav links */}
           <div className="hidden lg:flex items-center gap-1">
             {NAV_ITEMS.slice(1).map((item) => (
               <a
                 key={item.hash}
                 href={hrefFor(item.hash)}
-                className={`relative px-4 py-2 text-[13.5px] font-medium transition-colors ${
-                  active === item.hash ? "text-ink-0" : "text-ink-300 hover:text-ink-0"
+                className={`relative px-3.5 py-2 text-[13px] font-medium transition-colors rounded-md ${
+                  active === item.hash ? "text-ink-0" : "text-ink-300 hover:text-ink-0 hover:bg-ink-700/10"
                 }`}
               >
                 {item.label}
                 {active === item.hash && isHome && (
-                  <span className="absolute left-4 right-4 -bottom-0.5 h-px bg-vibeesta-400" />
+                  <span className="absolute left-3.5 right-3.5 -bottom-0.5 h-px bg-vibeesta-400" />
                 )}
               </a>
             ))}
             <Link
               href="/gallery"
-              className={`relative px-4 py-2 text-[13.5px] font-medium transition-colors ${
-                pathname === "/gallery" ? "text-ink-0" : "text-ink-300 hover:text-ink-0"
+              className={`relative px-3.5 py-2 text-[13px] font-medium transition-colors rounded-md ${
+                pathname === "/gallery" ? "text-ink-0" : "text-ink-300 hover:text-ink-0 hover:bg-ink-700/10"
               }`}
             >
               Gallery
-              {pathname === "/gallery" && <span className="absolute left-4 right-4 -bottom-0.5 h-px bg-shrinik-600" />}
+              {pathname === "/gallery" && <span className="absolute left-3.5 right-3.5 -bottom-0.5 h-px bg-shrinik-600" />}
             </Link>
             <Link
               href="/campus-ambassador"
-              className={`relative px-4 py-2 text-[13.5px] font-medium transition-colors ${
-                pathname === "/campus-ambassador" ? "text-ink-0" : "text-ink-300 hover:text-ink-0"
+              className={`relative px-3.5 py-2 text-[13px] font-medium transition-colors rounded-md ${
+                pathname === "/campus-ambassador" ? "text-ink-0" : "text-ink-300 hover:text-ink-0 hover:bg-ink-700/10"
               }`}
             >
               Ambassador
-              {pathname === "/campus-ambassador" && <span className="absolute left-4 right-4 -bottom-0.5 h-px bg-vibeesta-400" />}
+              {pathname === "/campus-ambassador" && <span className="absolute left-3.5 right-3.5 -bottom-0.5 h-px bg-vibeesta-400" />}
             </Link>
           </div>
 
@@ -130,39 +131,47 @@ export default function Navbar() {
                 href={registrationUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden sm:inline-flex items-center rounded-full fusion-gradient text-ink-0 text-[13px] font-semibold px-5 py-2.5 transition-transform hover:-translate-y-0.5"
+                className="btn-primary btn-sm hidden sm:inline-flex"
               >
                 Register Now
               </a>
             ) : (
-              <span className="hidden sm:inline-flex items-center rounded-full border border-ink-700/50 text-ink-300 text-[12px] font-medium px-5 py-2.5">
+              <span className="btn-ghost btn-sm hidden sm:inline-flex">
                 Registration Opening Soon
               </span>
             )}
+            {/* Hamburger — 44×44px minimum touch target */}
             <button
               aria-label="Toggle menu"
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen((v) => !v)}
-              className="lg:hidden w-10 h-10 flex items-center justify-center text-ink-0"
+              className="lg:hidden w-11 h-11 flex items-center justify-center text-ink-0 rounded-lg hover:bg-ink-700/20 transition-colors active:scale-95"
             >
-              {menuOpen ? <X size={20} /> : <Menu size={20} />}
+              {menuOpen ? <X size={21} /> : <Menu size={21} />}
             </button>
           </div>
         </div>
       </nav>
 
-      {/* Mobile full-screen menu */}
+      {/* Mobile full-screen menu — slides in from right */}
       <div
-        className={`fixed inset-0 z-[190] bg-base-950/98 backdrop-blur-xl flex flex-col items-center justify-center gap-2 transition-all duration-500 lg:hidden ${
-          menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        className={`fixed inset-0 z-[190] bg-base-950/98 backdrop-blur-xl flex flex-col items-center justify-center gap-1 transition-all duration-400 lg:hidden ${
+          menuOpen
+            ? "opacity-100 pointer-events-auto translate-x-0"
+            : "opacity-0 pointer-events-none translate-x-4"
         }`}
+        style={{ transitionProperty: "opacity, transform" }}
       >
         {NAV_ITEMS.map((item) => (
           <a
             key={item.hash}
             href={hrefFor(item.hash)}
             onClick={() => setMenuOpen(false)}
-            className="font-display font-bold text-2xl py-3 text-ink-300 hover:text-ink-0 transition-colors"
+            className={`w-full max-w-xs text-center font-display font-bold text-2xl py-3.5 rounded-xl transition-colors ${
+              active === item.hash && isHome
+                ? "text-ink-0 bg-ink-700/20"
+                : "text-ink-300 hover:text-ink-0 hover:bg-ink-700/10"
+            }`}
           >
             {item.label}
           </a>
@@ -170,31 +179,43 @@ export default function Navbar() {
         <Link
           href="/gallery"
           onClick={() => setMenuOpen(false)}
-          className="font-display font-bold text-2xl py-3 text-ink-300 hover:text-ink-0 transition-colors"
+          className={`w-full max-w-xs text-center font-display font-bold text-2xl py-3.5 rounded-xl transition-colors ${
+            pathname === "/gallery"
+              ? "text-ink-0 bg-ink-700/20"
+              : "text-ink-300 hover:text-ink-0 hover:bg-ink-700/10"
+          }`}
         >
           Gallery
         </Link>
         <Link
           href="/campus-ambassador"
           onClick={() => setMenuOpen(false)}
-          className="font-display font-bold text-2xl py-3 text-ink-300 hover:text-ink-0 transition-colors"
+          className={`w-full max-w-xs text-center font-display font-bold text-2xl py-3.5 rounded-xl transition-colors ${
+            pathname === "/campus-ambassador"
+              ? "text-ink-0 bg-ink-700/20"
+              : "text-ink-300 hover:text-ink-0 hover:bg-ink-700/10"
+          }`}
         >
           Ambassador
         </Link>
-        {registrationUrl ? (
-          <a
-            href={registrationUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-6 inline-flex items-center rounded-full fusion-gradient text-ink-0 text-sm font-semibold px-7 py-3.5"
-          >
-            Register Now
-          </a>
-        ) : (
-          <span className="mt-6 inline-flex items-center rounded-full border border-ink-700/50 text-ink-300 text-sm px-7 py-3.5">
-            Registration Opening Soon
-          </span>
-        )}
+        {/* Mobile Register CTA */}
+        <div className="mt-6">
+          {registrationUrl ? (
+            <a
+              href={registrationUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+              onClick={() => setMenuOpen(false)}
+            >
+              Register Now
+            </a>
+          ) : (
+            <span className="btn-ghost">
+              Registration Opening Soon
+            </span>
+          )}
+        </div>
       </div>
     </>
   );
