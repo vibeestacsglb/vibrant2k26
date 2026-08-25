@@ -8,6 +8,7 @@ const LINKS = [
   { label: "Schedule", href: "/#schedule" },
   { label: "Sponsors", href: "/#sponsors" },
   { label: "Gallery", href: "/gallery" },
+  { label: "Ambassador", href: "/campus-ambassador" },
   { label: "FAQ", href: "/#faq" },
   { label: "Contact", href: "/#contact" },
 ];

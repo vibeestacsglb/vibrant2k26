@@ -107,11 +107,20 @@ export default function Navbar() {
             <Link
               href="/gallery"
               className={`relative px-4 py-2 text-[13.5px] font-medium transition-colors ${
-                !isHome ? "text-ink-0" : "text-ink-300 hover:text-ink-0"
+                pathname === "/gallery" ? "text-ink-0" : "text-ink-300 hover:text-ink-0"
               }`}
             >
               Gallery
-              {!isHome && <span className="absolute left-4 right-4 -bottom-0.5 h-px bg-shrinik-600" />}
+              {pathname === "/gallery" && <span className="absolute left-4 right-4 -bottom-0.5 h-px bg-shrinik-600" />}
+            </Link>
+            <Link
+              href="/campus-ambassador"
+              className={`relative px-4 py-2 text-[13.5px] font-medium transition-colors ${
+                pathname === "/campus-ambassador" ? "text-ink-0" : "text-ink-300 hover:text-ink-0"
+              }`}
+            >
+              Ambassador
+              {pathname === "/campus-ambassador" && <span className="absolute left-4 right-4 -bottom-0.5 h-px bg-vibeesta-400" />}
             </Link>
           </div>
 
@@ -164,6 +173,13 @@ export default function Navbar() {
           className="font-display font-bold text-2xl py-3 text-ink-300 hover:text-ink-0 transition-colors"
         >
           Gallery
+        </Link>
+        <Link
+          href="/campus-ambassador"
+          onClick={() => setMenuOpen(false)}
+          className="font-display font-bold text-2xl py-3 text-ink-300 hover:text-ink-0 transition-colors"
+        >
+          Ambassador
         </Link>
         {registrationUrl ? (
           <a
