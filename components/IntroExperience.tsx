@@ -52,8 +52,6 @@ export default function IntroExperience() {
     }, 500);
   }
 
-  if (phase === "done") return null;
-
   const collided = phase === "collide" || phase === "reveal" || phase === "exit";
   const revealed = phase === "reveal" || phase === "exit";
 
