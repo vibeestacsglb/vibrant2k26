@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/siteConfig";
 import CampusAmbassadorLeaderboard from "@/components/CampusAmbassadorLeaderboard";
+import CampusAmbassadorEnrollButton from "@/components/CampusAmbassadorEnrollButton";
 
 export const metadata: Metadata = {
   title: `Campus Ambassador | ${siteConfig.seo.title}`,
@@ -29,6 +30,7 @@ export default function CampusAmbassadorPage() {
           <p className="mt-6 max-w-2xl mx-auto text-ink-300 text-[13px] sm:text-[14.5px] leading-relaxed px-4">
             Invite your peers to experience VIBRANT 2K26. The top referrers will earn exclusive rewards, VIP access, and special recognition during the closing ceremony.
           </p>
+          <CampusAmbassadorEnrollButton />
         </div>
 
         <CampusAmbassadorLeaderboard />
