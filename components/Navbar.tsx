@@ -131,12 +131,12 @@ export default function Navbar() {
                 href={registrationUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary btn-sm hidden sm:inline-flex"
+                className="btn-primary btn-sm hidden lg:inline-flex"
               >
                 Register Now
               </a>
             ) : (
-              <span className="btn-ghost btn-sm hidden sm:inline-flex">
+              <span className="btn-ghost btn-sm hidden lg:inline-flex">
                 Registration Opening Soon
               </span>
             )}
@@ -145,9 +145,9 @@ export default function Navbar() {
               aria-label="Toggle menu"
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen((v) => !v)}
-              className="lg:hidden w-11 h-11 flex items-center justify-center text-ink-0 rounded-lg hover:bg-ink-700/20 transition-colors active:scale-95"
+              className="lg:hidden w-11 h-11 flex items-center justify-center text-ink-0 rounded-lg hover:bg-ink-700/20 transition-colors active:scale-95 shrink-0"
             >
-              {menuOpen ? <X size={21} /> : <Menu size={21} />}
+              {menuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
