@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@upstash/redis": "^1.38.3",
     "framer-motion": "^11.3.19",
     "googleapis": "^176.0.0",
     "lucide-react": "^0.400.0",

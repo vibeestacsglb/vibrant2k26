@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
+import { Redis } from "@upstash/redis";
 
 // Define the interface for our data
 interface Ambassador {
@@ -25,25 +26,25 @@ export async function POST(request: Request) {
     const inputName = name.trim().toLowerCase();
     const inputBranch = branch.trim().toLowerCase();
 
-    // Paths to our local databases
-    const dbPath = path.join(process.cwd(), "data", "ambassadors.json");
+    // Initialize Upstash Redis
+    const redis = Redis.fromEnv();
     const legacyCsvPath = path.join(process.cwd(), "data", "legacy_ambassadors.csv");
 
     let maxId = 58; // Start at 59 (58 + 1)
     let duplicateCode = "";
 
-    // 1. Fetch existing JSON data
+    // 1. Fetch existing data from Upstash Redis
     let existingData: Ambassador[] = [];
     try {
-      const fileData = await fs.readFile(dbPath, "utf-8");
-      existingData = JSON.parse(fileData);
-    } catch (e: any) {
-      if (e.code !== "ENOENT") {
-        console.error("Failed to read from ambassadors.json:", e);
+      const data = await redis.get<Ambassador[]>("ambassadors");
+      if (data && Array.isArray(data)) {
+        existingData = data;
       }
+    } catch (e: any) {
+      console.error("Failed to read from Redis:", e);
     }
 
-    // Check JSON for duplicates and maxId
+    // Check Redis JSON array for duplicates and maxId
     for (const ambassador of existingData) {
       if (
         ambassador.name.trim().toLowerCase() === inputName &&
@@ -59,7 +60,7 @@ export async function POST(request: Request) {
       }
     }
 
-    // 2. Fetch legacy CSV data
+    // 2. Fetch legacy CSV data (Read-Only static file, Vercel supports this)
     try {
       const csvData = await fs.readFile(legacyCsvPath, "utf-8");
       const lines = csvData.split(/\r?\n/);
@@ -103,7 +104,7 @@ export async function POST(request: Request) {
     // 4. Generate New Code
     const newCode = `CA${String(maxId + 1).padStart(3, "0")}`;
 
-    // 5. Append New Record to JSON
+    // 5. Append New Record to Redis
     const newAmbassador: Ambassador = {
       name: name.trim(),
       contact: contact.trim(),
@@ -114,8 +115,8 @@ export async function POST(request: Request) {
 
     existingData.push(newAmbassador);
 
-    await fs.mkdir(path.dirname(dbPath), { recursive: true });
-    await fs.writeFile(dbPath, JSON.stringify(existingData, null, 2), "utf-8");
+    // Save the updated array back to Upstash Redis
+    await redis.set("ambassadors", existingData);
 
     return NextResponse.json({
       success: true,
