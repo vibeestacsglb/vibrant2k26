@@ -1,8 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import useSWR from "swr";
 import { Trophy, RefreshCw, AlertCircle } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface LeaderboardEntry {
   rank: number;
@@ -13,12 +14,14 @@ interface LeaderboardEntry {
 interface LeaderboardData {
   updatedAt: string;
   leaderboard: LeaderboardEntry[];
+  dailyLeaderboard: LeaderboardEntry[];
   error?: string;
 }
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function CampusAmbassadorLeaderboard() {
+  const [view, setView] = useState<"allTime" | "daily">("allTime");
   const { data, error, isLoading } = useSWR<LeaderboardData>(
     "/api/campus-ambassador/leaderboard",
     fetcher,
@@ -65,9 +68,13 @@ export default function CampusAmbassadorLeaderboard() {
     );
   }
 
+  const activeLeaderboard = view === "allTime" 
+    ? data?.leaderboard 
+    : data?.dailyLeaderboard;
+
   return (
     <div className="w-full max-w-4xl mx-auto">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 border-b border-ink-700/30 pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4">
         <h2 className="text-xl sm:text-2xl md:text-3xl font-display font-bold">
           TOP 20 <span className="accent-rule">AMBASSADORS</span>
         </h2>
@@ -86,6 +93,32 @@ export default function CampusAmbassadorLeaderboard() {
               Live Updates
             </span>
           )}
+        </div>
+      </div>
+
+      {/* Toggle UI */}
+      <div className="flex justify-center mb-8">
+        <div className="bg-base-900/50 backdrop-blur-md border border-ink-700/30 p-1 rounded-full inline-flex relative shadow-lg">
+          <div
+            className="absolute top-1 bottom-1 w-[calc(50%-4px)] bg-vibeesta-600/20 border border-vibeesta-500/50 rounded-full transition-all duration-300 ease-in-out z-0"
+            style={{ left: view === "allTime" ? "4px" : "calc(50%)" }}
+          />
+          <button
+            onClick={() => setView("allTime")}
+            className={`relative z-10 px-6 py-2 text-sm font-semibold tracking-wider uppercase transition-colors rounded-full ${
+              view === "allTime" ? "text-vibeesta-400" : "text-ink-400 hover:text-ink-200"
+            }`}
+          >
+            All-Time
+          </button>
+          <button
+            onClick={() => setView("daily")}
+            className={`relative z-10 px-6 py-2 text-sm font-semibold tracking-wider uppercase transition-colors rounded-full ${
+              view === "daily" ? "text-vibeesta-400" : "text-ink-400 hover:text-ink-200"
+            }`}
+          >
+            1-Day Winner
+          </button>
         </div>
       </div>
 
@@ -108,33 +141,44 @@ export default function CampusAmbassadorLeaderboard() {
               </div>
             ))}
           </div>
-        ) : data?.leaderboard && data.leaderboard.length > 0 ? (
+        ) : activeLeaderboard && activeLeaderboard.length > 0 ? (
           <div className="flex flex-col">
-            {data.leaderboard.map((entry, i) => (
+            <AnimatePresence mode="wait">
               <motion.div
-                key={entry.referralCode}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.05 }}
-                className={`grid grid-cols-12 gap-2 sm:gap-4 p-3 sm:p-5 items-center border-b last:border-0 transition-colors hover:bg-white/[0.02] ${getRankStyle(entry.rank)}`}
+                key={view}
+                initial={{ opacity: 0, x: view === "allTime" ? -20 : 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: view === "allTime" ? 20 : -20 }}
+                transition={{ duration: 0.3 }}
               >
-                <div className="col-span-2 text-center flex justify-center scale-90 sm:scale-100">
-                  {getRankBadge(entry.rank)}
-                </div>
-                <div className="col-span-7 font-display tracking-wider sm:tracking-widest text-[13px] sm:text-[15px] md:text-lg truncate">
-                  {entry.referralCode}
-                </div>
-                <div className="col-span-3 text-right font-display text-[13px] sm:text-[15px] md:text-lg">
-                  {entry.registrations}
-                </div>
+                {activeLeaderboard.map((entry, i) => (
+                  <div
+                    key={entry.referralCode}
+                    className={`grid grid-cols-12 gap-2 sm:gap-4 p-3 sm:p-5 items-center border-b last:border-0 transition-colors hover:bg-white/[0.02] ${getRankStyle(entry.rank)}`}
+                  >
+                    <div className="col-span-2 text-center flex justify-center scale-90 sm:scale-100">
+                      {getRankBadge(entry.rank)}
+                    </div>
+                    <div className="col-span-7 font-display tracking-wider sm:tracking-widest text-[13px] sm:text-[15px] md:text-lg truncate">
+                      {entry.referralCode}
+                    </div>
+                    <div className="col-span-3 text-right font-display text-[13px] sm:text-[15px] md:text-lg">
+                      {entry.registrations}
+                    </div>
+                  </div>
+                ))}
               </motion.div>
-            ))}
+            </AnimatePresence>
           </div>
         ) : (
           <div className="p-12 text-center text-ink-500">
             <Trophy size={48} className="mx-auto text-ink-700/30 mb-4" />
             <p className="font-display tracking-wider uppercase mb-1">No registrations yet</p>
-            <p className="text-sm">Be the first to share your referral code!</p>
+            <p className="text-sm">
+              {view === "daily" 
+                ? "The race for today just started! Be the first to get a registration." 
+                : "Be the first to share your referral code!"}
+            </p>
           </div>
         )}
       </div>
